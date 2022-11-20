@@ -26,6 +26,9 @@ st.write(
     e.g. a blog post, and summarizes them into a Tweet-sized
     statement using OpenAI's GPT-3 based Davinci model."""
 )
+st.markdown(
+    "You can find the code on [GitHub](https://github.com/kinosal/summarizer)."
+)
 
 selectbox = st.selectbox("Raw text or URL source", ("URL", "Raw text"))
 
@@ -65,6 +68,6 @@ elif selectbox == "URL":
             print(url_summary)
             components.html(
                 f"""
-                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="{url_summary}\n⬆️\nAI-generated summary of" data-url="{url}" data-hashtags="openai,gpt" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="{url_summary}\n⬆️\nAI-generated summary of" data-url="{url}" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 """
             )
