@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "summarizer"
+version = "0.1.0"
+description = ""
+authors = ["Nikolas Schriefer <info@nikolasschriefer.de>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+streamlit = "^1.15.0"
+openai = "^0.25.0"
+bs4 = "^0.0.1"
+
+[tool.poetry.dev-dependencies]
+black = "^22.10.0"
+pycodestyle = "^2.9.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
