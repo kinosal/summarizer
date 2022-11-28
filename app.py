@@ -39,7 +39,7 @@ summary_prompt = (
 
 
 if selectbox == "Raw text":
-    raw_text = st.text_area(label="Text", height=300, max_chars=5000)
+    raw_text = st.text_area(label="Text", height=300, max_chars=6000)
     if raw_text:
         raw_summary = openai.call(prompt=raw_text + summary_prompt)
         st.text_area(
@@ -59,7 +59,7 @@ elif selectbox == "URL":
         elif response.status_code != 200:
             st.error(f"Response status {response.status_code}")
         else:
-            url_text = scraper.extract_content(response)[:5000]
+            url_text = scraper.extract_content(response)[:6000]
             url_summary = (
                 openai.call(prompt=url_text + summary_prompt).strip().replace("\n", " ")
             )
