@@ -43,7 +43,7 @@ class Scraper:
         """Extract plain text from html."""
         soup = BeautifulSoup(html.text, "html.parser")
         elements = [
-            element.text for element in soup.find_all(["p"])
-            if len(element.text) > 10
+            element.text for element in soup.find_all(["h1", "h2", "h3", "p"])
+            if len(element.text) > 5
         ]
-        return " ".join(elements)
+        return "\n\n".join(elements)

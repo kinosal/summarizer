@@ -33,13 +33,13 @@ st.markdown(
 selectbox = st.selectbox("Raw text or URL source", ("URL", "Raw text"))
 
 summary_prompt = (
-    "\n\nSummarize the main points from the above text in less than 120 characters:\n"
+    "\n\nSummarize the main points from the above article in less than 120 characters:\n"
 )
 # summary_prompt = "\n\nTl;dr\n"
 
 
 if selectbox == "Raw text":
-    raw_text = st.text_area(label="Text", height=300, max_chars=4000)
+    raw_text = st.text_area(label="Text", height=300, max_chars=5000)
     if raw_text:
         raw_summary = openai.call(prompt=raw_text + summary_prompt)
         st.text_area(
@@ -59,7 +59,7 @@ elif selectbox == "URL":
         elif response.status_code != 200:
             st.error(f"Response status {response.status_code}")
         else:
-            url_text = scraper.extract_content(response)[:4000]
+            url_text = scraper.extract_content(response)[:5000]
             url_summary = (
                 openai.call(prompt=url_text + summary_prompt).strip().replace("\n", " ")
             )
@@ -68,6 +68,6 @@ elif selectbox == "URL":
             print(url_summary)
             components.html(
                 f"""
-                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="{url_summary}\n⬆️\nAI-generated summary of" data-url="{url}" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="{url_summary}\n- AI generated summary via web-summarizer.streamlit.app of" data-url="{url}" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 """
             )
