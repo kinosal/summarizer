@@ -1,14 +1,25 @@
 """OpenAI API connector."""
 
+# Import from standard library
+import os
+import logging
+
 # Import from 3rd party libraries
 import openai
+import streamlit as st
+
+# Assign credentials from environment variable or streamlit secrets dict
+openai.api_key = os.getenv("OPENAI_API_KEY") or st.secrets["OPENAI_API_KEY"]
+
+# Suppress openai request/response logging
+# Handle by manually changing the respective APIRequestor methods in the openai package
+# Does not work hosted on Streamlit since all packages are re-installed by Poetry
+# Alternatively (affects all messages from this logger):
+logging.getLogger("openai").setLevel(logging.WARNING)
 
 
 class Openai:
     """OpenAI Connector."""
-
-    def __init__(self, api_key) -> None:
-        openai.api_key = api_key
 
     @staticmethod
     def call(prompt: str) -> str:
@@ -26,5 +37,11 @@ class Openai:
             "frequency_penalty": 0,
             "presence_penalty": 0,
         }
-        response = openai.Completion.create(**kwargs)
-        return response["choices"][0]["text"]
+        try:
+            response = openai.Completion.create(**kwargs)
+            return response["choices"][0]["text"]
+
+        except Exception as e:
+            logging.error(f"OpenAI API error: {e}")
+            st.error(f"OpenAI API error: {e}")
+            return ""
