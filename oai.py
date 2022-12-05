@@ -22,7 +22,22 @@ class Openai:
     """OpenAI Connector."""
 
     @staticmethod
-    def call(prompt: str) -> str:
+    def moderate(prompt: str) -> bool:
+        """Call OpenAI GPT Moderation with text prompt.
+        Args:
+            prompt: text prompt
+        Return: boolean if flagged
+        """
+        try:
+            response = openai.Moderation.create(prompt)
+            return response["results"][0]["flagged"]
+
+        except Exception as e:
+            logging.error(f"OpenAI API error: {e}")
+            st.session_state.text_error = f"OpenAI API error: {e}"
+
+    @staticmethod
+    def complete(prompt: str, temperature: float = 0.9, max_tokens: int = 50) -> str:
         """Call OpenAI GPT with text prompt.
         Args:
             prompt: text prompt
@@ -31,11 +46,11 @@ class Openai:
         kwargs = {
             "engine": "text-davinci-003",
             "prompt": prompt,
-            "temperature": 0.8,
-            "max_tokens": 50,
-            "top_p": 1,
-            "frequency_penalty": 0,
-            "presence_penalty": 0,
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+            "top_p": 1,  # default
+            "frequency_penalty": 0,  # default
+            "presence_penalty": 0,  # default
         }
         try:
             response = openai.Completion.create(**kwargs)
@@ -44,4 +59,3 @@ class Openai:
         except Exception as e:
             logging.error(f"OpenAI API error: {e}")
             st.error(f"OpenAI API error: {e}")
-            return ""
