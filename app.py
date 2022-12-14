@@ -121,6 +121,7 @@ if st.session_state.summary:
             "**Other Streamlit apps by [@kinosal](https://twitter.com/kinosal)**"
         )
         st.markdown("[Tweet Generator](https://tweets.streamlit.app)")
+        st.markdown("[Twitter Wrapped](https://twitter-likes.streamlit.app)")
         st.markdown("[Code Translator](https://english-to-code.streamlit.app)")
         st.markdown("[PDF Analyzer](https://pdf-keywords.streamlit.app)")
     with col2:
