@@ -7,11 +7,11 @@ authors = ["Nikolas Schriefer <info@nikolasschriefer.de>"]
 [tool.poetry.dependencies]
 python = "^3.10"
 streamlit = "^1.15"
-openai = "^0.25"
+openai = "^0.27"
 bs4 = "^0.0"
 
 [tool.poetry.dev-dependencies]
-black = "^22.10"
+black = "^23.3"
 pycodestyle = "^2.9"
 
 [build-system]

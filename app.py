@@ -18,7 +18,7 @@ logging.basicConfig(format="\n%(asctime)s\n%(message)s", level=logging.INFO, for
 # Define functions
 def summarize(text: str):
     """Summarize text."""
-    summary_prompt = "\n\nSummarize the main points from the above article in less than 120 characters:\n\n"
+    summary_prompt = "\n\Write an engaging summary for the above article in less than 120 characters:\n\n"
     openai = oai.Openai()
     flagged = openai.moderate(text)
     if flagged:
@@ -26,7 +26,10 @@ def summarize(text: str):
         return
     st.session_state.error = ""
     st.session_state.summary = (
-        openai.complete(prompt=text + summary_prompt).strip().replace("\n", " ")
+        openai.complete(prompt=text + summary_prompt, model="gpt-3.5-turbo")
+        .strip()
+        .replace("\n", " ")
+        .replace('"', "")
     )
 
 
@@ -41,7 +44,7 @@ st.title("Summarize web content")
 st.markdown(
     """This mini-app scrapes the paragraphs from a web page,
     e.g. a blog post, and summarizes them into a Tweet-sized
-    statement using OpenAI's GPT-3 based [Davinci model](https://beta.openai.com/docs/models/overview). You can find the code on [GitHub](https://github.com/kinosal/summarizer) and the author on [Twitter](https://twitter.com/kinosal)."""
+    statement using OpenAI's [GPTs](https://beta.openai.com/docs/models/overview). You can find the code on [GitHub](https://github.com/kinosal/summarizer) and the author on [Twitter](https://twitter.com/kinosal)."""
 )
 
 selectbox = st.selectbox("Raw text or URL source", ("URL", "Raw text"))
