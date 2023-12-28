@@ -26,7 +26,7 @@ def summarize(text: str):
         return
     st.session_state.error = ""
     st.session_state.summary = (
-        openai.complete(prompt=text + summary_prompt, model="gpt-3.5-turbo")
+        openai.complete(prompt=text + summary_prompt)
         .strip()
         .replace("\n", " ")
         .replace('"', "")
